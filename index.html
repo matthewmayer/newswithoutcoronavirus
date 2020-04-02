@@ -44,7 +44,7 @@ const base = "https://api.rss2json.com/v1/api.json"
 const api_key = "h45xexzztd7wec9aoc6aoe69wndiv20ubfjvj86d"
 const feedContainers = Array.from(document.getElementsByTagName("article"))
 const feedsDiv = document.getElementById("feeds")
-let coronawords = ["corona","pandemic","stranded","cases","cdc","nhs","ventilator","virus","covid","wuhan","food bank","stock market","n95","mask","quarantine","virtual","zoom","vlog","lockdown","curfew","vaccine"]
+let coronawords = ["corona","pandemic","trump","medical supplies","stranded","cases","cdc","nhs","ventilator","virus","covid","wuhan","food bank","stock market","n95","mask","quarantine","virtual","zoom","vlog","lockdown","curfew","vaccine"]
 coronawords.sort()
 document.getElementById("words").innerHTML = coronawords.join(", ")
 const noCorona = item => {
