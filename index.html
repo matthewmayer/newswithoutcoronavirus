@@ -9,6 +9,9 @@
 </head>
 <body>
   <main>
+    <header>
+      <h1>News <s>Without Coronavirus</s></h1>
+    </header>
   <div id="feeds">
     <article data-title="BBC Top Stories" data-url="http://feeds.bbci.co.uk/news/rss.xml"></article>
     <article data-title="BBC World" data-url="http://feeds.bbci.co.uk/news/world/rss.xml"></article>
@@ -26,7 +29,7 @@
     <article data-title="E! Online" data-url="http://syndication.eonline.com/syndication/feeds/rssfeeds/topstories.xml"></article>
   </div>
   <footer>
-    News without Coronavirus, by <a href="https://twitter.com/mattmayer">Matt Mayer</a>. <br><br>Simply fetches RSS feeds and strips out all news articles mentioning any of the following: <q id="words"></q>
+    News without Coronavirus, by <a href="https://twitter.com/mattmayer">Matt Mayer</a>. <a href="https://github.com/matthewmayer/newswithoutcoronavirus">Github source</a>. <br><br>Simply fetches RSS feeds and strips out all news articles mentioning any of the following: <q id="words"></q>
   </footer>
 </main>
 <script>
@@ -63,7 +66,7 @@ for (let feedContainer of feedContainers) {
         const title = feedContainer.dataset.title
         const link = json.feed.link
         const image = json.feed.image
-        const header = `<h2><img src="${image}" /><a target="_blank" href="${link}">${title}</a></h2>`
+        const header = `<h2><a target="_blank" href="${link}">${title}</a></h2>`
         let itemHTMLs = []
         const theItems = json.items || []
         for (let item of theItems) {
