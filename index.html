@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>News without Coronavirus</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.typekit.net/jqo7cvn.css">
+</head>
+<body>
+  <main>
+  <div id="feeds">
+    <article data-title="BBC Top Stories" data-url="http://feeds.bbci.co.uk/news/rss.xml"></article>
+    <article data-title="BBC World" data-url="http://feeds.bbci.co.uk/news/world/rss.xml"></article>
+    <article data-title="BBC Business" data-url="http://feeds.bbci.co.uk/news/business/rss.xml"></article>
+    <article data-title="Sky News" data-url="http://feeds.skynews.com/feeds/rss/home.xml"></article>
+    <article data-title="Reuters" data-url="http://feeds.reuters.com/Reuters/worldNews"></article>
+    <article data-title="Washington Post" data-url="http://feeds.washingtonpost.com/rss/rss_blogpost"></article>
+    <article data-title="Yahoo News" data-url="https://www.yahoo.com/news/rss/world"></article>
+    <article data-title="CNN World" data-url="http://rss.cnn.com/rss/edition_world.rss"></article>
+    <article data-title="CNN US" data-url="http://rss.cnn.com/rss/edition_us.rss"></article>
+    <article data-title="The Guardian" data-url="https://www.theguardian.com/uk/rss"></article>
+    <article data-title="TechCrunch" data-url="http://feeds.feedburner.com/TechCrunch/"></article>
+    <article data-title="Wired" data-url="https://www.wired.com/feed"></article>
+    <article data-title="Bangkok Post" data-url="https://www.bangkokpost.com/rss/data/topstories.xml"</article>
+    <article data-title="E! Online" data-url="http://syndication.eonline.com/syndication/feeds/rssfeeds/topstories.xml"></article>
+  </div>
+  <footer>
+    News without Coronavirus, by <a href="https://twitter.com/mattmayer">Matt Mayer</a>. <br><br>Simply fetches RSS feeds and strips out all news articles mentioning any of the following: <q id="words"></q>
+  </footer>
+</main>
+<script>
+const base = "https://api.rss2json.com/v1/api.json"
+const api_key = "h45xexzztd7wec9aoc6aoe69wndiv20ubfjvj86d"
+const feedContainers = Array.from(document.getElementsByTagName("article"))
+const feedsDiv = document.getElementById("feeds")
+let coronawords = ["corona","pandemic","stranded","cases","cdc","nhs","ventilator","virus","covid","wuhan","food bank","stock market","n95","mask","quarantine","virtual","zoom","vlog","lockdown","curfew","vaccine"]
+coronawords.sort()
+document.getElementById("words").innerHTML = coronawords.join(", ")
+const noCorona = item => {
+  for (let word of coronawords) {
+    if (item.title.toLowerCase().includes(word)) {
+      return false
+    }
+    if (item.content.toLowerCase().includes(word)) {
+      return false
+    }
+    if (item.description.toLowerCase().includes(word)) {
+      return false
+    }
+  }
+  return true
+}
+for (let feedContainer of feedContainers) {
+  let feed = feedContainer.dataset.url
+  let url = `${base}?rss_url=${encodeURI(feed)}&api_key=${api_key}`
+  fetch(url)
+    .then(response => {
+      let json = response.json().then(json => {
+        if (json.status=="error") {
+          throw(json.message)
+        }
+        const title = feedContainer.dataset.title
+        const link = json.feed.link
+        const image = json.feed.image
+        const header = `<h2><img src="${image}" /><a target="_blank" href="${link}">${title}</a></h2>`
+        let itemHTMLs = []
+        const theItems = json.items || []
+        for (let item of theItems) {
+          if (noCorona(item)) {
+            itemHTMLs.push(`<li>
+            <h3><a target="_blank" href="${item.link}">${item.title}</a></h3>
+          </li>`)
+          }
+        }
+        const theBody = `<ul>${itemHTMLs.join("")}</ul>`
+        if (itemHTMLs.length==0) {
+          feedContainer.style.display = "none"
+        }
+        feedContainer.innerHTML = `${header}${theBody}`
+        
+      }).catch(err => {
+        console.warn(err)
+        feedContainer.innerHTML = "Cannot fetch"
+      })
+    })
+    .catch(err => {
+      console.warn(err)
+      feedContainer.innerHTML = "Cannot fetch"
+    });
+}
+
+</script>
+</body>
+</html>
