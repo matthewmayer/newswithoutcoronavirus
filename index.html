@@ -1,142 +1,145 @@
 <!doctype html>
 <html lang="en-US">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>News without Coronavirus</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://use.typekit.net/jqo7cvn.css">
-  <meta property="og:type"               content="website" />
-  <meta property="og:title"              content="News without Coronavirus" />
-  <meta property="og:description"        content="All the news that fits, we print (except for anything about COVID-19)" />
-  <meta property="description"           content="All the news that fits, we print (except for anything about COVID-19)" />
-  <meta property="og:url"                content="https://newswithoutcoronavirus.com/" />
-  <meta property="og:image"              content="https://newswithoutcoronavirus.com/logo.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="News without Coronavirus" />
+  <meta property="og:description" content="All the news that fits, we print (except for anything about COVID-19)" />
+  <meta property="description" content="All the news that fits, we print (except for anything about COVID-19)" />
+  <meta property="og:url" content="https://newswithoutcoronavirus.com/" />
+  <meta property="og:image" content="https://newswithoutcoronavirus.com/logo.png" />
 
 </head>
+
 <body>
   <main>
     <header>
       <h1>News <s>Without Coronavirus</s></h1>
     </header>
-  <div id="feeds">
-    <article data-title="BBC Top Stories" data-url="http://feeds.bbci.co.uk/news/rss.xml"></article>
-    <article data-title="BBC World" data-url="http://feeds.bbci.co.uk/news/world/rss.xml"></article>
-    <article data-title="BBC Business" data-url="http://feeds.bbci.co.uk/news/business/rss.xml"></article>
-    <article data-title="New York Times" data-url="https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"></article>
-    <article data-title="Sky News" data-url="http://feeds.skynews.com/feeds/rss/home.xml"></article>
-    <article data-title="Reuters" data-url="http://feeds.reuters.com/Reuters/worldNews"></article>
-    <article data-title="Washington Post" data-url="http://feeds.washingtonpost.com/rss/rss_blogpost"></article>
-    <article data-title="Yahoo News" data-url="https://www.yahoo.com/news/rss/world"></article>
-    <article data-title="CNN World" data-url="http://rss.cnn.com/rss/edition_world.rss"></article>
-    <article data-title="CNN US" data-url="http://rss.cnn.com/rss/edition_us.rss"></article>
-    <article data-title="The Guardian" data-url="https://www.theguardian.com/uk/rss"></article>
-    <article data-title="TechCrunch" data-url="http://feeds.feedburner.com/TechCrunch/"></article>
-    <article data-title="Wired" data-url="https://www.wired.com/feed"></article>
-    <article data-title="Bangkok Post" data-url="https://www.bangkokpost.com/rss/data/topstories.xml"</article>
-    <article data-title="E! Online" data-url="http://syndication.eonline.com/syndication/feeds/rssfeeds/topstories.xml"></article>
-    <article data-title="BuzzFeed" data-url="https://www.buzzfeed.com/world.xml"></article>
-  </div>
-  <footer>
-    News without Coronavirus, by <a href="https://twitter.com/mattmayer">Matt Mayer</a>. <a href="https://github.com/matthewmayer/newswithoutcoronavirus">Github source</a>. <br><br>Simply fetches RSS feeds and strips out all news articles mentioning any of the following: <q id="words"></q>
-  </footer>
-</main>
-<script>
-const base = "https://api.rss2json.com/v1/api.json"
-const api_key = "h45xexzztd7wec9aoc6aoe69wndiv20ubfjvj86d"
-const feedContainers = Array.from(document.getElementsByTagName("article"))
-const feedsDiv = document.getElementById("feeds")
-let coronawords = [ "bailout",
-  "bails out",
-  "cases",
-  "cdc",
-  "corona",
-  "covid",
-  "crisis",
-  "curfew",
-  "dead",
-  "death",
-  "food bank",
-  "government aid",
-  "hospital",
-  "lockdown",
-  "mask",
-  "medical supplies",
-  "n95",
-  "nhs",
-  "online education",
-  "pandemic",
-  "quarantine",
-  "stay home",
-  "stay at home",
-  "stock market",
-  "stranded",
-  "trump",
-  "unemploy",
-  "vaccine",
-  "ventilator",
-  "virtual",
-  "virus",
-  "vlog",
-  "wuhan",
-  "zoom"
-]
-coronawords.sort()
-document.getElementById("words").innerHTML = coronawords.join(", ")
-const noCorona = item => {
-  for (let word of coronawords) {
-    if (item.title.toLowerCase().includes(word)) {
-      return false
-    }
-    if (item.content.toLowerCase().includes(word)) {
-      return false
-    }
-    if (item.description.toLowerCase().includes(word)) {
-      return false
-    }
-  }
-  return true
-}
-for (let feedContainer of feedContainers) {
-  let feed = feedContainer.dataset.url
-  let url = `${base}?rss_url=${encodeURI(feed)}&api_key=${api_key}`
-  fetch(url)
-    .then(response => {
-      let json = response.json().then(json => {
-        if (json.status=="error") {
-          throw(json.message)
+    <div id="feeds">
+      <article data-title="BBC Top Stories" data-url="http://feeds.bbci.co.uk/news/rss.xml"></article>
+      <article data-title="BBC World" data-url="http://feeds.bbci.co.uk/news/world/rss.xml"></article>
+      <article data-title="BBC Business" data-url="http://feeds.bbci.co.uk/news/business/rss.xml"></article>
+      <article data-title="New York Times" data-url="https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"></article>
+      <article data-title="Sky News" data-url="http://feeds.skynews.com/feeds/rss/home.xml"></article>
+      <article data-title="Reuters" data-url="http://feeds.reuters.com/Reuters/worldNews"></article>
+      <article data-title="Washington Post" data-url="http://feeds.washingtonpost.com/rss/rss_blogpost"></article>
+      <article data-title="Yahoo News" data-url="https://www.yahoo.com/news/rss/world"></article>
+      <article data-title="CNN World" data-url="http://rss.cnn.com/rss/edition_world.rss"></article>
+      <article data-title="CNN US" data-url="http://rss.cnn.com/rss/edition_us.rss"></article>
+      <article data-title="The Guardian" data-url="https://www.theguardian.com/uk/rss"></article>
+      <article data-title="TechCrunch" data-url="http://feeds.feedburner.com/TechCrunch/"></article>
+      <article data-title="Wired" data-url="https://www.wired.com/feed"></article>
+      <article data-title="Bangkok Post" data-url="https://www.bangkokpost.com/rss/data/topstories.xml"></article>
+      <article data-title="E! Online" data-url="http://syndication.eonline.com/syndication/feeds/rssfeeds/topstories.xml"></article>
+      <article data-title="BuzzFeed" data-url="https://www.buzzfeed.com/world.xml"></article>
+    </div>
+    <footer>
+      News without Coronavirus, by <a href="https://twitter.com/mattmayer">Matt Mayer</a>. <a href="https://github.com/matthewmayer/newswithoutcoronavirus">Github source</a>. <br><br>Simply fetches RSS feeds and strips out all news articles
+      mentioning any of the following: <q id="words"></q>
+    </footer>
+  </main>
+  <script>
+    const base = "https://api.rss2json.com/v1/api.json"
+    const api_key = "h45xexzztd7wec9aoc6aoe69wndiv20ubfjvj86d"
+    const feedContainers = Array.from(document.getElementsByTagName("article"))
+    const feedsDiv = document.getElementById("feeds")
+    let coronawords = ["bailout",
+      "bails out",
+      "cases",
+      "cdc",
+      "corona",
+      "covid",
+      "crisis",
+      "curfew",
+      "dead",
+      "death",
+      "food bank",
+      "government aid",
+      "hospital",
+      "lockdown",
+      "mask",
+      "medical supplies",
+      "n95",
+      "nhs",
+      "online education",
+      "pandemic",
+      "quarantine",
+      "stay home",
+      "stay at home",
+      "stock market",
+      "stranded",
+      "trump",
+      "unemploy",
+      "vaccine",
+      "ventilator",
+      "virtual",
+      "virus",
+      "vlog",
+      "wuhan",
+      "zoom"
+    ]
+    coronawords.sort()
+    document.getElementById("words").innerHTML = coronawords.join(", ")
+    const noCorona = item => {
+      for (let word of coronawords) {
+        if (item.title.toLowerCase().includes(word)) {
+          return false
         }
-        const title = feedContainer.dataset.title
-        const link = json.feed.link
-        const image = json.feed.image
-        const header = `<h2><a target="_blank" href="${link}">${title}</a></h2>`
-        let itemHTMLs = []
-        const theItems = json.items || []
-        for (let item of theItems) {
-          if (noCorona(item)) {
-            itemHTMLs.push(`<li>
+        if (item.content.toLowerCase().includes(word)) {
+          return false
+        }
+        if (item.description.toLowerCase().includes(word)) {
+          return false
+        }
+      }
+      return true
+    }
+    for (let feedContainer of feedContainers) {
+      let feed = feedContainer.dataset.url
+      let url = `${base}?rss_url=${encodeURI(feed)}&api_key=${api_key}`
+      fetch(url)
+        .then(response => {
+          let json = response.json().then(json => {
+            if (json.status == "error") {
+              throw (json.message)
+            }
+            const title = feedContainer.dataset.title
+            const link = json.feed.link
+            const image = json.feed.image
+            const header = `<h2><a target="_blank" href="${link}">${title}</a></h2>`
+            let itemHTMLs = []
+            const theItems = json.items || []
+            for (let item of theItems) {
+              if (noCorona(item)) {
+                itemHTMLs.push(`<li>
             <h3><a target="_blank" href="${item.link}">${item.title}</a></h3>
           </li>`)
-          }
-        }
-        const theBody = `<ul>${itemHTMLs.join("")}</ul>`
-        console.log(`${title} displaying ${itemHTMLs.length}/${theItems.length}`)
-        if (itemHTMLs.length==0) {
-          feedContainer.style.display = "none"
-        }
-        feedContainer.innerHTML = `${header}${theBody}`
-        
-      }).catch(err => {
-        console.warn(err)
-        feedContainer.innerHTML = "Cannot fetch"
-      })
-    })
-    .catch(err => {
-      console.warn(err)
-      feedContainer.innerHTML = "Cannot fetch"
-    });
-}
+              }
+            }
+            const theBody = `<ul>${itemHTMLs.join("")}</ul>`
+            console.log(`${title} displaying ${itemHTMLs.length}/${theItems.length}`)
+            if (itemHTMLs.length == 0) {
+              feedContainer.style.display = "none"
+            }
+            feedContainer.innerHTML = `${header}${theBody}`
 
-</script>
+          }).catch(err => {
+            console.warn(err)
+            feedContainer.innerHTML = "Cannot fetch"
+          })
+        })
+        .catch(err => {
+          console.warn(err)
+          feedContainer.innerHTML = "Cannot fetch"
+        });
+    }
+  </script>
 </body>
+
 </html>
