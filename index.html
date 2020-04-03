@@ -35,6 +35,7 @@
     <article data-title="Wired" data-url="https://www.wired.com/feed"></article>
     <article data-title="Bangkok Post" data-url="https://www.bangkokpost.com/rss/data/topstories.xml"</article>
     <article data-title="E! Online" data-url="http://syndication.eonline.com/syndication/feeds/rssfeeds/topstories.xml"></article>
+    <article data-title="BuzzFeed" data-url="https://www.buzzfeed.com/world.xml"></article>
   </div>
   <footer>
     News without Coronavirus, by <a href="https://twitter.com/mattmayer">Matt Mayer</a>. <a href="https://github.com/matthewmayer/newswithoutcoronavirus">Github source</a>. <br><br>Simply fetches RSS feeds and strips out all news articles mentioning any of the following: <q id="words"></q>
@@ -45,7 +46,38 @@ const base = "https://api.rss2json.com/v1/api.json"
 const api_key = "h45xexzztd7wec9aoc6aoe69wndiv20ubfjvj86d"
 const feedContainers = Array.from(document.getElementsByTagName("article"))
 const feedsDiv = document.getElementById("feeds")
-let coronawords = ["corona","hospital", "bails out", "bailout", "death","dead", "pandemic","trump","medical supplies","stranded","cases","cdc","nhs","ventilator","virus","covid","wuhan","food bank","stock market","n95","mask","quarantine","virtual","zoom","vlog","lockdown","curfew","vaccine"]
+let coronawords = [ "bailout",
+  "bails out",
+  "cases",
+  "cdc",
+  "corona",
+  "covid",
+  "crisis",
+  "curfew",
+  "dead",
+  "death",
+  "food bank",
+  "hospital",
+  "lockdown",
+  "mask",
+  "medical supplies",
+  "n95",
+  "nhs",
+  "online education",
+  "pandemic",
+  "quarantine",
+  "stay home",
+  "stay at home",
+  "stock market",
+  "stranded",
+  "trump",
+  "vaccine",
+  "ventilator",
+  "virus",
+  "vlog",
+  "wuhan",
+  "zoom"
+]
 coronawords.sort()
 document.getElementById("words").innerHTML = coronawords.join(", ")
 const noCorona = item => {
@@ -85,6 +117,7 @@ for (let feedContainer of feedContainers) {
           }
         }
         const theBody = `<ul>${itemHTMLs.join("")}</ul>`
+        console.log(`${title} displaying ${itemHTMLs.length}/${theItems.length}`)
         if (itemHTMLs.length==0) {
           feedContainer.style.display = "none"
         }
