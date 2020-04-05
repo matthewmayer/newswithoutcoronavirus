@@ -128,7 +128,7 @@
             let itemHTMLs = []
             const theItems = json.items || []
             for (let item of theItems) {
-              if (noCorona(item)) {
+              if (item.title && noCorona(item)) {
                 itemHTMLs.push(`<li>
             <h3><a target="_blank" href="${item.link}">${item.title}</a></h3>
           </li>`)
