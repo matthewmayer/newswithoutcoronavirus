@@ -53,42 +53,53 @@
     const api_key = "h45xexzztd7wec9aoc6aoe69wndiv20ubfjvj86d"
     const feedContainers = Array.from(document.getElementsByTagName("article"))
     const feedsDiv = document.getElementById("feeds")
-    let coronawords = ["bailout",
-"boris",
+    let coronawords = [
+      "bailout",
       "bails out",
+      "bodies",
+      "boris",
       "cancelled",
       "cases",
       "cdc",
-      "corona",
       "collective response",
+      "corona",
       "covid",
       "crisis",
+      "cruise ship",
       "curfew",
       "dead",
       "death",
       "facetime",
       "food bank",
       "government aid",
-"health",
+      "health",
       "hospital",
-"isolate","reckless","woe",
-"laid off",
-"laid-off",
+      "isolate",
+      "isolation",
+      "laid off",
+      "laid-off",
       "lockdown",
       "losing job",
       "losing their job",
       "losing your job",
       "mask",
       "medical",
-"morgue",
+      "morgue",
+      "no job",
       "n95",
+      "non-essential",
       "nhs",
       "online education",
-"pay cut","cruise ship",
+      "outbreak",
       "pandemic",
+      "pay cut",
       "quarantine",
-      "stay home",
+      "recession",
+      "reckless",
+      "social distanc",
+      "social emergency",
       "stay at home",
+      "stay home",
       "stock market",
       "stranded",
       "trump",
@@ -100,6 +111,7 @@
       "virus",
       "vlog",
       "wet market",
+      "woe",
       "work from home",
       "wuhan",
       "zoom"
@@ -133,12 +145,13 @@
             const link = json.feed.link
             const image = json.feed.image
             const header = `<h2><a target="_blank" href="${link}">${title}</a></h2>`
+            const clean = s=>s.replace("&#39;s","'")
             let itemHTMLs = []
             const theItems = json.items || []
             for (let item of theItems) {
               if (item.title && noCorona(item)) {
                 itemHTMLs.push(`<li>
-            <h3><a target="_blank" href="${item.link}">${item.title}</a></h3>
+            <h3><a target="_blank" href="${item.link}">${clean(item.title)}</a></h3>
           </li>`)
               }
             }
