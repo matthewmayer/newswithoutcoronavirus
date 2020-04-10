@@ -76,6 +76,7 @@
       "dead",
       "death",
       "facetime",
+      "food aid",
       "food bank",
       "government aid",
       "health",
@@ -98,16 +99,19 @@
       "online education",
       "outbreak",
       "pandemic",
+      "plunge",
       "pay cut",
       "quarantine",
       "recession",
       "reckless",
+      "shield",
       "social distanc",
       "social emergency",
       "stay at home",
       "stay home",
       "stock market",
       "stranded",
+      "temperature",
       "trump",
       "unemploy",
       "us economy",
@@ -151,7 +155,7 @@
             const link = json.feed.link
             const image = json.feed.image
             const header = `<h2><a target="_blank" href="${link}">${title}</a></h2>`
-            const clean = s=>s.replace("&#39;s","'")
+            const clean = s=>s.replace("&#39;s","'").replace("&apos;","'")
             let itemHTMLs = []
             const theItems = json.items || []
             for (let item of theItems) {
